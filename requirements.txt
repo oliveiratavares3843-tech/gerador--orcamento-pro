@@ -2,3 +2,6 @@ streamlit
 fpdf2
 Pillow
 streamlit-authenticator
+st-gsheets-connection
+streamlit-authenticator
+pandas
