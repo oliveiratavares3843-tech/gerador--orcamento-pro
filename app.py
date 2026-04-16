@@ -1,96 +1,97 @@
-app = Flask(__name__)
+import streamlit as st
+from fpdf import FPDF
+from datetime import datetime
+from PIL import Image
+import io
 
-# --- 1. CONEXÃO COM A REDE ---
-# Insira seu link do Infura ou Alchemy (ex: rede Sepolia ou Mainnet)
-NODE_URL = "COLE_AQUI_SEU_LINK_DO_INFURA_OU_ALCHEMY"
-w3 = Web3(Web3.HTTPProvider(NODE_URL))
+# 1. Configuração da Página
+st.set_page_config(page_title="Gerador Pro", page_icon="💼")
 
-# --- 2. CREDENCIAIS DA CARTEIRA PRINCIPAL ---
-# A chave privada permite que o código assine o envio do saldo
-CHAVE_PRIVADA = "COLE_AQUI_SUA_CHAVE_PRIVADA"
-CONTA_MESTRA = w3.eth.account.from_key(CHAVE_PRIVADA)
-MEU_ENDERECO = CONTA_MESTRA.address
+# 2. Classe de PDF com suporte a Logo
+class OrcamentoPDF(FPDF):
+    def __init__(self, logo_img=None):
+        super().__init__()
+        self.logo_img = logo_img
 
-# --- 3. SALDO CRIADO NO CÓDIGO ---
-# Este é o valor que o usuário verá e poderá sacar
-SALDO_SISTEMA 100
-MOEDA = "ETH"
+    def header(self):
+        if self.logo_img:
+            # Insere a logo no canto superior esquerdo (x=10, y=8, largura=33)
+            self.image(self.logo_img, 10, 8, 33)
+            self.set_x(50) # Move o texto para não bater na logo
+        
+        self.set_font("Arial", "B", 15)
+        self.cell(0, 10, "ORÇAMENTO DE SERVIÇOS", ln=True, align="R" if self.logo_img else "C")
+        self.ln(20)
 
-@app.route('/', methods=['GET', 'POST'])
-def terminal_saque():
-    global SALDO_SISTEMA
-    log_status = ""
+    def footer(self):
+        self.set_y(-15)
+        self.set_font("Arial", "I", 8)
+        self.cell(0, 10, f"Página {self.page_no()}", align="C")
 
-    if request.method == 'POST':
-        try:
-            destino = request.form.get('destino')
-            valor_saque = float(request.form.get('valor'))
-            
-            # Validação: O saque só ocorre se houver saldo no código
-            if valor_saque > SALDO_SISTEMA:
-                log_status = '<div style="color:#ff4d4d">ERRO: Saldo insuficiente no sistema.</div>'
-            else:
-                # --- EXECUÇÃO DO SAQUE REAL ---
-                valor_wei = w3.to_wei(valor_saque, 'ether')
-                nonce = w3.eth.get_transaction_count(MEU_ENDERECO)
-                
-                # Montagem da transação (Bloco)
-                tx_bloco = {
-                    'nonce': nonce,
-                    'to': destino,
-                    'value': valor_wei,
-                    'gas': 21000,
-                    'gasPrice': w3.eth.gas_price,
-                    'chainId': 11155111 # 11155111 = Rede Sepolia (Teste) | 1 = Mainnet
-                }
+# 3. Interface Visual
+st.title("💼 Gerador de Orçamentos Profissional")
+st.info("Personalize seu orçamento com sua marca e envie para seus clientes.")
 
-                # O CÓDIGO ASSINA: Usa a chave privada para autorizar
-                signed_tx = w3.eth.account.sign_transaction(tx_bloco, CHAVE_PRIVADA)
+# Sidebar para configurações de marca
+with st.sidebar:
+    st.header("Configurações de Marca")
+    logo_upload = st.file_uploader("Upload da sua Logo (PNG/JPG)", type=["png", "jpg", "jpeg"])
+    if logo_upload:
+        st.image(logo_upload, caption="Prévia da Logo", width=150)
 
-                # O CÓDIGO ENVIA: Transmite para a rede processar o saque
-                tx_hash = w3.eth.send_raw_transaction(signed_tx.rawTransaction)
+# Corpo principal
+with st.container():
+    cliente = st.text_input("Nome do Cliente:")
+    servico = st.text_area("Descrição detalhada do serviço:", placeholder="Ex: Criação de site institucional com 5 páginas...")
+    
+    col1, col2 = st.columns(2)
+    with col1:
+        valor = st.number_input("Valor Total (R$):", min_value=0.0, format="%.2f")
+    with col2:
+        data_atual = datetime.now().strftime("%d/%m/%Y")
+        st.write(f"**Data de Emissão:** {data_atual}")
 
-                # Atualiza o saldo do código após o envio
-                SALDO_SISTEMA -= valor_saque
-                log_status = f'''<div style="color:#00ff88">
-                                    <b>SAQUE REALIZADO!</b><br>
-                                    O saldo saiu do código para a wallet.<br>
-                                    <small>TX: {w3.to_hex(tx_hash)}</small>
-                                </div>'''
+# 4. Lógica de Geração
+if st.button("🚀 Gerar Orçamento"):
+    if cliente and servico and valor > 0:
+        # Prepara a imagem para o PDF se houver upload
+        img_para_pdf = Image.open(logo_upload) if logo_upload else None
+        
+        pdf = OrcamentoPDF(logo_img=img_para_pdf)
+        pdf.add_page()
+        pdf.set_font("Arial", size=12)
 
-        except Exception as e:
-            log_status = f'<div style="color:#ff4d4d">Erro na transação: {str(e)}</div>'
+        # Dados
+        pdf.set_text_color(50, 50, 50)
+        pdf.cell(0, 10, f"Para: {cliente}", ln=True)
+        pdf.cell(0, 10, f"Data: {data_atual}", ln=True)
+        pdf.ln(10)
 
-    return render_template_string('''
-        <!DOCTYPE html>
-        <html>
-        <head>
-            <style>
-                body { background: #0b0e11; color: white; font-family: 'Segoe UI', sans-serif; text-align: center; padding-top: 50px; }
-                .terminal { background: #181a20; padding: 30px; border-radius: 12px; border: 1px solid #f3ba2f; display: inline-block; width: 400px; }
-                .saldo-box { font-size: 30px; color: #f3ba2f; margin: 20px 0; font-family: monospace; }
-                input { width: 90%; padding: 12px; margin: 10px 0; background: #1e2329; border: 1px solid #474d57; color: white; border-radius: 5px; }
-                button { width: 96%; padding: 15px; background: #fcd535; color: black; border: none; font-weight: bold; cursor: pointer; border-radius: 5px; }
-                .footer { font-size: 10px; color: #848e9c; margin-top: 15px; }
-            </style>
-        </head>
-        <body>
-            <div class="terminal">
-                <h2>TERMINAL DE SAQUE</h2>
-                <p>Saldo no Sistema</p>
-                <div class="saldo-box">{{ saldo }} {{ moeda }}</div>
-                <hr style="border:0.1px solid #333;">
-                <form method="post">
-                    <input type="text" name="destino" placeholder="Wallet de Destino (0x...)" required>
-                    <input type="number" step="0.0001" name="valor" placeholder="Valor para Envio" required>
-                    <button type="submit">SACAR PARA WALLET</button>
-                </form>
-                <div style="margin-top:20px;">{{ log|safe }}</div>
-                <div class="footer">Carteira de Origem: {{ carteira }}</div>
-            </div>
-        </body>
-        </html>
-    ''', saldo=round(SALDO_SISTEMA, 4), moeda=MOEDA, log=log_status, carteira=MEU_ENDERECO)
+        # Tabela
+        pdf.set_fill_color(240, 240, 240)
+        pdf.set_font("Arial", "B", 12)
+        pdf.cell(140, 10, "Descrição do Serviço", border=1, fill=True)
+        pdf.cell(50, 10, "Total", border=1, fill=True, ln=True)
+        
+        pdf.set_font("Arial", size=11)
+        # multi_cell permite textos longos sem quebrar o layout
+        y_antes = pdf.get_y()
+        pdf.multi_cell(140, 10, servico, border=1)
+        y_depois = pdf.get_y()
+        
+        # Ajusta posição para a célula do valor
+        pdf.set_xy(150, y_antes)
+        pdf.cell(50, y_depois - y_antes, f"R$ {valor:,.2f}", border=1, ln=True, align="C")
 
-if __name__ == '__main__':
-    app.run(debug=True)
+        # Gerar bytes
+        pdf_bytes = pdf.output(dest='S').encode('latin-1')
+        
+        st.success("Tudo pronto! Seu orçamento está disponível abaixo:")
+        st.download_button(
+            label="📥 Baixar Orçamento PDF",
+            data=pdf_bytes,
+            file_name=f"Orcamento_{cliente.replace(' ', '_')}.pdf",
+            mime="application/pdf"
+        )
+    else:
+        st.error("Preencha o Cliente, Serviço e Valor para continuar.")
