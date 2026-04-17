@@ -4,6 +4,19 @@ from fpdf import FPDF
 from datetime import datetime
 from PIL import Image
 import io
+import streamlit as st
+
+st.markdown(
+    """
+    <style>
+    .stApp {
+        background-color: #1e3a8a;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
 
 # 1. Configuração da Página (Deve ser a primeira linha)
 st.set_page_config(page_title="Gerador Pro", page_icon="💼")
