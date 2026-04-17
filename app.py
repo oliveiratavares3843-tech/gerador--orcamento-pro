@@ -5,28 +5,36 @@ from datetime import datetime
 from PIL import Image
 import io
 
-# 1. Configuração da Página (DEVE ser a primeira linha do Streamlit)
+# 1. Configuração da Página (Deve ser a primeira linha)
 st.set_page_config(page_title="Gerador Pro", page_icon="💼")
 
-# --- CONFIGURAÇÃO DE ACESSO (Onde você gerencia seus clientes) ---
-usuarios = {
-    "usernames": {
-        "admin": {
-            "name": "Administrador",
-            "password": "123",  # Mude aqui a senha que você vai usar
-            "email": "seu@email.com"
+# --- 2. CONFIGURAÇÃO DE ACESSO (Estrutura correta com 'credentials') ---
+config = {
+    "credentials": {
+        "usernames": {
+            "admin": {
+                "name": "Administrador",
+                "password": "123",  # Mude sua senha aqui
+                "email": "seu@email.com"
+            }
         }
+    },
+    "cookie": {
+        "name": "cookie_gerador_orcamento",
+        "key": "chave_secreta_123",
+        "expiry_days": 30
     }
 }
 
+# Inicializa o autenticador
 authenticator = stauth.Authenticate(
-    usuarios,
-    "cookie_gerador_orcamento",
-    "chave_secreta_123",
-    cookie_expiry_days=30
+    config['credentials'],
+    config['cookie']['name'],
+    config['cookie']['key'],
+    config['cookie']['expiry_days']
 )
 
-# --- CLASSE DO PDF (Sua lógica original) ---
+# --- 3. CLASSE DO PDF (Sua lógica original) ---
 class OrcamentoPDF(FPDF):
     def __init__(self, logo_img=None):
         super().__init__()
@@ -45,11 +53,10 @@ class OrcamentoPDF(FPDF):
         self.set_font("Arial", "I", 8)
         self.cell(0, 10, f"Página {self.page_no()}", align="C")
 
-# --- FUNÇÃO DO SISTEMA PRINCIPAL ---
+# --- 4. FUNÇÃO DO SISTEMA PRINCIPAL ---
 def meu_sistema_principal():
-    # Aqui começa o seu código original
     st.title("💼 Gerador de Orçamentos Profissional")
-    st.info("Personalize seu orçamento com sua marca e envie para seus clientes.")
+    st.info(f"Bem-vindo, {st.session_state['name']}! Personalize seu orçamento abaixo.")
 
     # Sidebar para configurações de marca
     with st.sidebar:
@@ -61,7 +68,7 @@ def meu_sistema_principal():
     # Corpo principal
     with st.container():
         cliente = st.text_input("Nome do Cliente:")
-        servico = st.text_area("Descrição detalhada do serviço:", placeholder="Ex: Criação de site institucional com 5 páginas...")
+        servico = st.text_area("Descrição detalhada do serviço:", placeholder="Ex: Criação de site institucional...")
         
         col1, col2 = st.columns(2)
         with col1:
@@ -99,7 +106,7 @@ def meu_sistema_principal():
 
             pdf_bytes = pdf.output(dest='S').encode('latin-1')
             
-            st.success("Tudo pronto! Seu orçamento está disponível abaixo:")
+            st.success("Tudo pronto!")
             st.download_button(
                 label="📥 Baixar Orçamento PDF",
                 data=pdf_bytes,
@@ -109,17 +116,15 @@ def meu_sistema_principal():
         else:
             st.error("Preencha o Cliente, Serviço e Valor para continuar.")
 
-# --- LÓGICA DE LOGIN ---
-# Adicionamos 'label=' antes do título do login
-# Versão ultra simplificada
-authentication_status = authenticator.login(location='main')
+# --- 5. LÓGICA DE EXIBIÇÃO DO LOGIN ---
+# O método login agora atualiza o session_state automaticamente
+authenticator.login(location='main')
 
-
-if authentication_status:
+if st.session_state["authentication_status"]:
     authenticator.logout('Sair', 'sidebar')
     meu_sistema_principal()
-elif authentication_status == False:
+elif st.session_state["authentication_status"] is False:
     st.error('Usuário ou senha incorretos')
-elif authentication_status == None:
+elif st.session_state["authentication_status"] is None:
     st.warning('Por favor, insira seu usuário e senha')
 
