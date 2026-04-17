@@ -110,7 +110,7 @@ def meu_sistema_principal():
             st.error("Preencha o Cliente, Serviço e Valor para continuar.")
 
 # --- LÓGICA DE LOGIN ---
-name, authentication_status, username = authenticator.login('Acesso ao Sistema', 'main')
+name, authentication_status, username = authenticator.login('Acesso ao Sistema',location= 'main')
 
 if authentication_status:
     authenticator.logout('Sair', 'sidebar')
