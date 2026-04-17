@@ -111,7 +111,8 @@ def meu_sistema_principal():
 
 # --- LÓGICA DE LOGIN ---
 # Adicionamos 'label=' antes do título do login
-name, authentication_status, username = authenticator.login(label='Acesso ao Sistema', location='main')
+# Versão ultra simplificada
+authentication_status = authenticator.login(location='main')
 
 
 if authentication_status:
