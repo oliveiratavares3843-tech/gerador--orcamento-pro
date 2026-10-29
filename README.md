@@ -2,9 +2,7 @@
 
 > **Descrição:** Sistema inteligente para criação de orçamentos e propostas comerciais, integrado ao Google Sheets e com geração de relatórios personalizados.
 
-🔗 **[CLIQUE AQUI PARA ACESSAR O GERADOR ONLINE](https://gerador--orcamento-pro.streamlit.app)**
-
-# Gerador de Orçamento Pro 💼
+🔗 **[CLIQUE AQUI PARA ACESSAR O GERADOR ONLINE](https://gerador--orcamento-pro.streamlit.app)*
 
 Sistema inteligente para criação, cálculo e gerenciamento de orçamentos e propostas comerciais, integrado diretamente com planilhas do Google Sheets para armazenamento seguro de dados.
 
