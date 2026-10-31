@@ -1,37 +1,38 @@
-# Gerador de Orçamento Pro 💼
+Pro Budget Generator 💼
+Description: Intelligent system for creating commercial budgets and proposals, integrated with Google Sheets and featuring custom report generation.
 
-> **Descrição:** Sistema inteligente para criação de orçamentos e propostas comerciais, integrado ao Google Sheets e com geração de relatórios personalizados.
+🔗 CLICK HERE TO ACCESS THE ONLINE GENERATOR
 
-🔗 **[CLIQUE AQUI PARA ACESSAR O GERADOR ONLINE](https://gerador--orcamento-pro.streamlit.app)*
+An intelligent system for creating, calculating, and managing commercial budgets and proposals, directly integrated with Google Sheets for secure data storage.
 
-Sistema inteligente para criação, cálculo e gerenciamento de orçamentos e propostas comerciais, integrado diretamente com planilhas do Google Sheets para armazenamento seguro de dados.
+🚀 Features
+Dynamic Web Interface: Designed to easily capture client and service data.
 
-## 🚀 Funcionalidades
+Cloud Database: Native integration with Google Sheets to save and query generated budgets.
 
-- **Interface Web Dinâmica:** Desenvolvida para facilitar o preenchimento de dados de clientes e serviços.
-- **Banco de Dados em Nuvem:** Integração nativa com o Google Sheets para salvar e consultar orçamentos gerados.
-- **Visual Personalizado:** Interface otimizada através de estilizações CSS customizadas para uma melhor experiência visual.
-- **Manipulação de Dados:** Uso de Pandas para processamento ágil das tabelas e cálculos internos.
+Custom Visuals: Optimized interface using custom CSS styling for an enhanced visual experience.
 
-## 🛠️ Tecnologias Utilizadas
+Data Manipulation: Uses Pandas for agile data table processing and internal calculations.
 
-- **Python**
-- **Streamlit** (Construção da interface web)
-- **Pandas** (Estruturação e tratamento dos dados)
-- **st-gsheets-connection** (Conexão segura com a API do Google Sheets)
+🛠️ Technologies Used
+Python
 
-## 📦 Como Instalar e Executar
+Streamlit (Web interface development)
 
-1. Clone o repositório em sua máquina local.
-2. Certifique-se de instalar as dependências obrigatórias listadas em `requisitos.txt`:
-   ```bash
-   pip install -r requisitos.txt
-   ```
-3. Execute o servidor do Streamlit:
-   ```bash
-   streamlit run app.py
-   ```
+Pandas (Data structuring and processing)
 
-## 🔐 Configuração do Banco de Dados (.toml)
-Para o funcionamento correto da integração com as planilhas, lembre-se de configurar suas credenciais do Google Sheets no diretório `.streamlit/secrets.toml` local ou na aba de *Secrets* do Streamlit Cloud.
+st-gsheets-connection (Secure connection to the Google Sheets API)
 
+📦 How to Install and Run
+Clone the repository to your local machine.
+
+Make sure to install the required dependencies listed in requisitos.txt:
+
+Bash
+pip install -r requisitos.txt
+Run the Streamlit server:
+
+Bash
+streamlit run app.py
+🔐 Database Configuration (.toml)
+For the Google Sheets integration to work correctly, remember to configure your credentials in the local .streamlit/secrets.toml directory or in the Secrets tab of Streamlit Cloud.
