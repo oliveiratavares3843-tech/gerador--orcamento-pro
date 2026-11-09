@@ -6,9 +6,7 @@ An intelligent system for creating, calculating, and managing commercial budgets
 
 ## 📁 Repository Structure
 
-- `.streamlit/` - Configuration files for the Streamlit interface and web deployment.
-- `src/` - Core Python application source code.
-- `tests/` - Automated test suite for validating calculations and connections.
+- `app` - Core aplication file containing the Streamlit web interface and logic.
 - `requirements.txt` - List of Python dependencies (Streamlit, Pandas, etc.).
 - `README.md` - Documentation of the project structure and execution steps.
 
