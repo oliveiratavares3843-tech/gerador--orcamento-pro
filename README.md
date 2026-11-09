@@ -1,38 +1,58 @@
-Pro Budget Generator 💼
-Description: Intelligent system for creating commercial budgets and proposals, integrated with Google Sheets and featuring custom report generation.
+# Pro Budget Generator
 
-🔗 CLICK HERE TO ACCESS THE ONLINE GENERATOR
+Description: Intelligent system for creating commercial budgets and proposals, integrated with Google Sheets and featuring custom report generation.
 
 An intelligent system for creating, calculating, and managing commercial budgets and proposals, directly integrated with Google Sheets for secure data storage.
 
-🚀 Features
-Dynamic Web Interface: Designed to easily capture client and service data.
+## 📁 Repository Structure
 
-Cloud Database: Native integration with Google Sheets to save and query generated budgets.
+- `.streamlit/` - Configuration files for the Streamlit interface and web deployment.
+- `src/` - Core Python application source code.
+- `tests/` - Automated test suite for validating calculations and connections.
+- `requirements.txt` - List of Python dependencies (Streamlit, Pandas, etc.).
+- `README.md` - Documentation of the project structure and execution steps.
 
-Custom Visuals: Optimized interface using custom CSS styling for an enhanced visual experience.
+## 🚀 Features
+- **Dynamic Web Interface:** Designed to easily capture client and service data.
+- **Cloud Database:** Native integration with Google Sheets to save and query generated budgets.
+- **Custom Visuals:** Optimized interface using custom CSS styling for an enhanced visual experience.
 
-Data Manipulation: Uses Pandas for agile data table processing and internal calculations.
+## 🛠️ Technologies Used
+- **Python** - Core programming language.
+- **Streamlit** - Web interface development framework.
+- **Pandas** - Agile data table processing and internal calculations.
+- **gspread / google-sheets-connection** - Secure connection to the Google Sheets API.
 
-🛠️ Technologies Used
-Python
+## 🔧 How to Run the Project
 
-Streamlit (Web interface development)
+1. **Install Dependencies:**
+   Ensure you have Python installed, then run:
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-Pandas (Data structuring and processing)
+2. **Set Up Google Sheets Credentials:**
+   Place your Google API credentials JSON file in the appropriate directory or configure your `.streamlit/secrets.toml` file.
 
-st-gsheets-connection (Secure connection to the Google Sheets API)
+3. **Execute the Application:**
+   Run the following command to start the local development server:
+   ```bash
+   streamlit run app.py
+   ```
 
-📦 How to Install and Run
-Clone the repository to your local machine.
+## 🧪 Automated Tests and Coverage
 
-Make sure to install the required dependencies listed in requisitos.txt:
+To ensure application stability and verify features without modifying core code:
 
-Bash
-pip install -r requisitos.txt
-Run the Streamlit server:
+1. **Run Tests:**
+   Execute the automated test suite using `pytest`:
+   ```bash
+   pytest
+   ```
 
-Bash
-streamlit run app.py
-🔐 Database Configuration (.toml)
-For the Google Sheets integration to work correctly, remember to configure your credentials in the local .streamlit/secrets.toml directory or in the Secrets tab of Streamlit Cloud.
+2. **Check Test Coverage:**
+   To generate a visual report of code coverage, run:
+   ```bash
+   pytest --cov=src tests/
+   ```
+
