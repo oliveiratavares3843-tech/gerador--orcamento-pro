@@ -1,7 +1,10 @@
-streamlit
-fpdf2
-Pillow
-streamlit-authenticator
-st-gsheets-connection
-streamlit-authenticator
-pandas
+streamlit==1.67.0
+streamlit-authenticator==0.4.2
+fpdf2==2.9.0
+pillow==12.3.0
+pandas==3.0.5
+st-gsheets-connection==0.1.0
+gspread-pandas==3.3.0
+pytest==8.3.3
+pytest-cov==6.0.0
+
