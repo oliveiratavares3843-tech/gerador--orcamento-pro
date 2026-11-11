@@ -2,7 +2,7 @@
 
 An intelligent commercial proposal and budget generation web application built with **Python**, **Streamlit**, and **Pandas**. Designed to streamline sales workflows with structured client data capture, automated proposal summaries, and cloud spreadsheet synchronization.
 
-🔗 **Live Demo:** [Insert your Streamlit App URL here]
+🔗 **Live Demo:** [https://gerador--orcamento-pro.streamlit.app/]
 
 ---
 
