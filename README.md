@@ -1,56 +1,52 @@
-# Pro Budget Generator
+# 💰 Pro Budget Generator
 
-Description: Intelligent system for creating commercial budgets and proposals, integrated with Google Sheets and featuring custom report generation.
+An intelligent commercial proposal and budget generation web application built with **Python**, **Streamlit**, and **Pandas**. Designed to streamline sales workflows with structured client data capture, automated proposal summaries, and cloud spreadsheet synchronization.
 
-An intelligent system for creating, calculating, and managing commercial budgets and proposals, directly integrated with Google Sheets for secure data storage.
+🔗 **Live Demo:** [Insert your Streamlit App URL here]
 
-## 📁 Repository Structure
+---
 
-- `app` - Core aplication file containing the Streamlit web interface and logic.
-- `requirements.txt` - List of Python dependencies (Streamlit, Pandas, etc.).
-- `README.md` - Documentation of the project structure and execution steps.
+## 🔐 Demo Credentials (For Recruiters & Evaluators)
 
-## 🚀 Features
-- **Dynamic Web Interface:** Designed to easily capture client and service data.
-- **Cloud Database:** Native integration with Google Sheets to save and query generated budgets.
-- **Custom Visuals:** Optimized interface using custom CSS styling for an enhanced visual experience.
+To test the full authentication flow and system features immediately, use the following credentials on the login screen:
 
-## 🛠️ Technologies Used
-- **Python** - Core programming language.
-- **Streamlit** - Web interface development framework.
-- **Pandas** - Agile data table processing and internal calculations.
-- **gspread / google-sheets-connection** - Secure connection to the Google Sheets API.
+* **Username:** `recruiter`
+* **Password:** `demo2026`
 
-## 🔧 How to Run the Project
+---
 
-1. **Install Dependencies:**
-   Ensure you have Python installed, then run:
+## ✨ Key Features
+
+* **3-Stage Navigation & Authentication Flow:** Structured routing (`Home` $\rightarrow$ `Login` $\rightarrow$ `System`) managed via `st.session_state` with secure session validation and logout controls.
+* **Secrets Management Ready:** Built-in support for `st.secrets` to safely store production credentials outside the public codebase.
+* **Commercial Proposal Builder:** Clean interface for capturing client details, service descriptions, and estimated pricing.
+* **Structured Data Preview:** Real-time tabular summary of generated proposals using Pandas DataFrames.
+
+---
+
+## 🛠️ Tech Stack
+
+* **Language:** Python 3.x
+* **Frontend & Routing:** Streamlit
+* **Data Processing:** Pandas
+
+---
+
+## 🚀 How to Run Locally
+
+1. Clone the repository:
    ```bash
-   pip install -r requirements.txt
+   git clone https://github.com
+   cd pro-budget-generator
    ```
 
-2. **Set Up Google Sheets Credentials:**
-   Place your Google API credentials JSON file in the appropriate directory or configure your `.streamlit/secrets.toml` file.
+2. Install dependencies:
+   ```bash
+   pip install streamlit pandas
+   ```
 
-3. **Execute the Application:**
-   Run the following command to start the local development server:
+3. Run the application:
    ```bash
    streamlit run app.py
-   ```
-
-## 🧪 Automated Tests and Coverage
-
-To ensure application stability and verify features without modifying core code:
-
-1. **Run Tests:**
-   Execute the automated test suite using `pytest`:
-   ```bash
-   pytest
-   ```
-
-2. **Check Test Coverage:**
-   To generate a visual report of code coverage, run:
-   ```bash
-   pytest --cov=src tests/
    ```
 
