@@ -1,8 +1,13 @@
 # 💰 Pro Budget Generator
 
+![Python](https://shields.io)
+![Streamlit](https://shields.io)
+![Pandas](https://shields.io)
+![Security](https://shields.io)
+
 An intelligent commercial proposal and budget generation web application built with **Python**, **Streamlit**, and **Pandas**. Designed to streamline sales workflows with structured client data capture, automated proposal summaries, and cloud spreadsheet synchronization.
 
-🔗 **Live Demo:** [https://gerador--orcamento-pro.streamlit.app/]
+🔗 **Live Demo:** **[Access the Pro Budget Generator](https://gerador--orcamento-pro.streamlit.app/)**
 
 ---
 
@@ -17,7 +22,7 @@ To test the full authentication flow and system features immediately, use the fo
 
 ## ✨ Key Features
 
-* **3-Stage Navigation & Authentication Flow:** Structured routing (`Home` $\rightarrow$ `Login` $\rightarrow$ `System`) managed via `st.session_state` with secure session validation and logout controls.
+* **3-Stage Navigation & Authentication Flow:** Structured routing (`Home → Login → System`) managed via `st.session_state` with secure session validation and logout controls.
 * **Secrets Management Ready:** Built-in support for `st.secrets` to safely store production credentials outside the public codebase.
 * **Commercial Proposal Builder:** Clean interface for capturing client details, service descriptions, and estimated pricing.
 * **Structured Data Preview:** Real-time tabular summary of generated proposals using Pandas DataFrames.
@@ -26,7 +31,7 @@ To test the full authentication flow and system features immediately, use the fo
 
 ## 🛠️ Tech Stack
 
-* **Language:** Python 3.x
+* **Language:** Python 3
 * **Frontend & Routing:** Streamlit
 * **Data Processing:** Pandas
 
@@ -37,16 +42,15 @@ To test the full authentication flow and system features immediately, use the fo
 1. Clone the repository:
    ```bash
    git clone https://github.com
-   cd pro-budget-generator
+   cd gerador--orcamento-pro
    ```
 
 2. Install dependencies:
    ```bash
-   pip install streamlit pandas
+   pip install -r requirements.txt
    ```
 
 3. Run the application:
    ```bash
    streamlit run app.py
    ```
-
